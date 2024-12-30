@@ -20,6 +20,13 @@
   border-bottom: 1px solid #cedc2a;
 }
 
+.List .deleteAll {
+  border: 2px dotted orange;
+  cursor: pointer;
+  background-color: white;
+  border-radius: 5px;
+}
+
 .List .todos_wrapper {
   display: flex;
   flex-direction: column;

@@ -2,76 +2,65 @@ import './App.css'
 import AddTodo from './components/AddTodo'
 import Header from './components/Header'
 import List from './components/List'
-import TodoItem from './components/TodoItem'
-import { useState, useRef } from 'react'
+import { useState } from 'react'
 
-const mockData = [
-  {
-    id: 0,
-    isDone: false,
-    content: "React 공부하기",
-    date: new Date().getTime(),
-  },
-  {
-    id: 1,
-    isDone: false,
-    content: "빨래하기",
-    date: new Date().getTime(),
-  },
-  {
-    id: 2,
-    isDone: false,
-    content: "운동하기",
-    date: new Date().getTime(),
-  },
-];
+const initialTodos = localStorage.getItem("todos") ? JSON.parse(localStorage.getItem("todos")) : [];
 
 function App() {
-  const [todos, setTodos] = useState(mockData);
-  const idRef = useRef(3);    
+  const [todos, setTodos] = useState(initialTodos);   
 
   const onCreate = (content) => {
     const newTodo = {
-      id: idRef.current++,
+      id: Date.now(),
       isDone: false,
       content: content,
-      date: new Date().getTime()
     }
 
-    setTodos([newTodo, ...todos]);
+    setTodos([...todos, newTodo]);
+    localStorage.setItem('todos', JSON.stringify([...todos, newTodo]));
   };
 
   const onUpdate = (targetId) => {
-    setTodos(
-      todos.map((todo) =>
-        todo.id === targetId
-          ? { ...todo, isDone: !todo.isDone}
-          : todo
-      )
+    let editedIsDone = todos.map((todo) =>
+      todo.id === targetId
+        ? { ...todo, isDone: !todo.isDone }
+        : todo
     );
+
+    setTodos(editedIsDone);
+    localStorage.setItem('todos', JSON.stringify(editedIsDone));
   };
 
   const onUpdateContent = (targetId, editedContent) => {
-    setTodos(
-      todos.map((todo) =>
-        todo.id === targetId
-          ? { ...todo, content: editedContent }
-          : todo
-      )
+    let editedTodoContent = todos.map((todo) =>
+      todo.id === targetId
+        ? { ...todo, content: editedContent }
+        : todo
     );
+
+    setTodos(editedTodoContent);
+    localStorage.setItem('todos', JSON.stringify(editedTodoContent));
   };
 
   const onDelete = (targetId) => {
-    setTodos(todos.filter((todo) =>
+    let deletedTodo = todos.filter((todo) =>
       todo.id !== targetId
-    ));
+    );
+
+    setTodos(deletedTodo);
+    localStorage.setItem('todos', JSON.stringify(deletedTodo));
   };
+
+  const deleteAll = () => {
+    setTodos([]);
+    localStorage.setItem('todos', JSON.stringify([]));
+  }
 
   return (
     <div className='App'>
       <Header />
       <AddTodo onCreate={onCreate} />
-      <List todos={todos} onUpdate={onUpdate} onUpdateContent={onUpdateContent} onDelete={onDelete} />
+      <List todos={todos} onUpdate={onUpdate} onUpdateContent={onUpdateContent} onDelete={onDelete} deleteAll={deleteAll} />
     </div>
   )
 }

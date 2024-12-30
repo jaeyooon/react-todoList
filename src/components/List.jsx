@@ -2,7 +2,7 @@ import TodoItem from "./TodoItem";
 import "./List.css"
 import { useState } from "react";
 
-const List = ({todos, onUpdate, onUpdateContent, onDelete}) => {
+const List = ({todos, onUpdate, onUpdateContent, onDelete, deleteAll}) => {
   const [search, setSearch] = useState("");
 
   const onChangeSearch = (e) => {
@@ -21,10 +21,11 @@ const List = ({todos, onUpdate, onUpdateContent, onDelete}) => {
   };
 
   const filteredTodos = getFilteredData();    // 컴포넌트가 리렌더링될 때마다 호출
-  
+
   return (
     <div className="List">
-      <h4>📌할 일 목록</h4>
+      <h4>📌할 일 목록 <button className="deleteAll" onClick={()=>deleteAll()}>✂</button> </h4>
+     
       <input
         value={search}
         onChange={onChangeSearch}

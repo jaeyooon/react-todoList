@@ -1,7 +1,7 @@
 .TodoItem {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 10px;
   padding-bottom: 20px;
   border-bottom: 1px solid #ebf3f4;
 }
@@ -23,7 +23,7 @@
 .TodoItem button {
   cursor: pointer;
   color: #67697c;
-  background-color: #eae2e0;
+  background-color: #f5f5dc;
   border: none;
   border-radius: 5px;
   padding: 5px;
