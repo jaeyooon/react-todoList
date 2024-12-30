@@ -1,0 +1,25 @@
+.AddTodo {
+  display: flex;
+  gap: 10px;
+}
+
+.AddTodo > input {
+  flex: 1;
+  padding: 15px;
+  border: 1px solid #dbe3e4;
+  border-radius: 10px;
+}
+
+.AddTodo > input:focus {
+  outline: none;
+  border: 1px solid #cedc2a;
+}
+
+.AddTodo > button {
+  cursor: pointer;
+  width: 80px;
+  border: none;
+  background-color: #cedc2a;
+  color: #3b3a3a;
+  border-radius: 10px
+}

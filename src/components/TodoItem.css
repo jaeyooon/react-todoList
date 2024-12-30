@@ -1,0 +1,35 @@
+.TodoItem {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #ebf3f4;
+}
+
+.TodoItem input {
+  width: 20px;
+}
+
+.TodoItem .Editing:focus {
+  outline: none;
+  border: 1px solid #d5e68d;
+}
+
+.TodoItem .content {
+  flex: 1;
+  color: #3b3a3a;
+}
+
+.TodoItem button {
+  cursor: pointer;
+  color: #67697c;
+  background-color: #eae2e0;
+  border: none;
+  border-radius: 5px;
+  padding: 5px;
+  font-size: 14px;
+}
+
+.TodoItem [type="checkbox"] {
+  accent-color: #f9c784;
+}
