@@ -1,6 +1,7 @@
 import TodoItem from "./TodoItem";
 import "./List.css"
 import { useState } from "react";
+import { MdOutlineDeleteSweep } from "react-icons/md";
 
 const List = ({todos, onUpdate, onUpdateContent, onDelete, deleteAll}) => {
   const [search, setSearch] = useState("");
@@ -24,7 +25,9 @@ const List = ({todos, onUpdate, onUpdateContent, onDelete, deleteAll}) => {
 
   return (
     <div className="List">
-      <h4>📌할 일 목록 <button className="deleteAll" onClick={()=>deleteAll()}>✂</button> </h4>
+      <h4>📌할 일 목록
+        <MdOutlineDeleteSweep onClick={() => { deleteAll() }} style={{ fontSize: 24, cursor: "pointer", color:"#2f4471"}} />
+      </h4>
      
       <input
         value={search}

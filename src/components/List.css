@@ -6,6 +6,9 @@
 
 .List > h4 {
   color: #3b3a3a;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .List > input {
@@ -18,13 +21,6 @@
 .List > input:focus {
   outline: none;
   border-bottom: 1px solid #cedc2a;
-}
-
-.List .deleteAll {
-  border: 2px dotted orange;
-  cursor: pointer;
-  background-color: white;
-  border-radius: 5px;
 }
 
 .List .todos_wrapper {
