@@ -2,22 +2,38 @@ import './App.css'
 import AddTodo from './components/AddTodo'
 import Header from './components/Header'
 import List from './components/List'
-import { useState } from 'react'
+import { useState, useReducer } from 'react'
 
 const initialTodos = localStorage.getItem("todos") ? JSON.parse(localStorage.getItem("todos")) : [];
 
+function reducer(state, action) {
+  switch (action.type) {
+    case "CREATE":
+      localStorage.setItem('todos', JSON.stringify([...state, action.data]));
+      return [...state, action.data];
+    case "UPDATE":
+      return action.editedIsDone;
+    case "UPDATE_CONTENT":
+      return action.editedTodoContent;
+    case "DELETE":
+      return action.deletedTodo;
+    case "DELETE_ALL":
+      return [];
+  }
+}
+
 function App() {
-  const [todos, setTodos] = useState(initialTodos);   
+  const [todos, dispatch] = useReducer(reducer, initialTodos);  
 
   const onCreate = (content) => {
-    const newTodo = {
-      id: Date.now(),
-      isDone: false,
-      content: content,
-    }
-
-    setTodos([...todos, newTodo]);
-    localStorage.setItem('todos', JSON.stringify([...todos, newTodo]));
+    dispatch({
+      type: "CREATE",
+      data: {
+        id: Date.now(),
+        isDone: false,
+        content: content,
+      }
+    })
   };
 
   const onUpdate = (targetId) => {
@@ -27,8 +43,12 @@ function App() {
         : todo
     );
 
-    setTodos(editedIsDone);
     localStorage.setItem('todos', JSON.stringify(editedIsDone));
+    dispatch({
+      type: "UPDATE",
+      editedIsDone: editedIsDone,
+    })
+    
   };
 
   const onUpdateContent = (targetId, editedContent) => {
@@ -38,8 +58,11 @@ function App() {
         : todo
     );
 
-    setTodos(editedTodoContent);
     localStorage.setItem('todos', JSON.stringify(editedTodoContent));
+    dispatch({
+      type: "UPDATE_CONTENT",
+      editedTodoContent: editedTodoContent,
+    })
   };
 
   const onDelete = (targetId) => {
@@ -47,14 +70,20 @@ function App() {
       todo.id !== targetId
     );
 
-    setTodos(deletedTodo);
     localStorage.setItem('todos', JSON.stringify(deletedTodo));
+    dispatch({
+      type: "DELETE",
+      deletedTodo: deletedTodo,
+    })
   };
 
   const deleteAll = () => {
-    setTodos([]);
     localStorage.setItem('todos', JSON.stringify([]));
-  }
+
+    dispatch({
+      type: "DELETE_ALL",
+    })
+  };
 
   return (
     <div className='App'>
